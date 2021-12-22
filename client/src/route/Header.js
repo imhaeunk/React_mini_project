@@ -1,21 +1,19 @@
-import React, { Component } from "react";
-import { Link, NavLink } from "react-router-dom";
-import { Nav, Navbar, NavbarBrand, NavItem } from "reactstrap";
+import React, { Component } from "react"
+import { Link, NavLink } from "react-router-dom"
+import { Nav, Navbar, NavbarBrand, NavItem } from "reactstrap"
 
 class Header extends Component {
   render() {
     return (
       <header>
         <Navbar>
-          <NavbarBrand>
-            <Link to={"/"}>
-              <img
-                src={require("../img/layout/logo.png").default}
-                height="90px"
-                width="200px"
-                alt=""
-              />
-            </Link>
+          <NavbarBrand to={"/"}>
+            <img
+              src={require("../img/layout/logo.png").default}
+              height="90px"
+              width="200px"
+              alt=""
+            />
           </NavbarBrand>
           {/* <NavbarToggler /> */}
           <Nav className="mr-auto" className="menu">
@@ -40,8 +38,8 @@ class Header extends Component {
           </Nav>
         </Navbar>
       </header>
-    );
+    )
   }
 }
 
-export default Header;
+export default Header
