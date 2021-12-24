@@ -1,16 +1,6 @@
 import React, { useEffect, useState } from "react"
 import { getProducts, addToCart } from "../../apiCalls"
-import {
-  Button,
-  Col,
-  Container,
-  Input,
-  InputGroup,
-  ListGroup,
-  ListGroupItem,
-  Row,
-  Table,
-} from "reactstrap"
+import { Button, Container, Table } from "reactstrap"
 const Product = (props) => {
   const [productList, setProductList] = useState([])
 
