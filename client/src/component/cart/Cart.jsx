@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react"
-import { getCartList } from "../../apiCalls"
+import { getCartInfo, orderCartItems } from "../../apiCalls"
 import {
   Button,
   Col,
@@ -19,16 +19,46 @@ const Cart = (props) => {
 
   useEffect(() => {
     ;(async () => {
-      const { json, totalPrice } = await getCartList()
+      const { json, totalPrice } = await getCartInfo(props.userId)
       setCartList(json)
       setTotalPrice(totalPrice)
     })()
   }, [])
 
-  const handleSubmit = () => {}
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    const cur = e.target
+    const orderInfo = {
+      receive_user: cur.receive_user.value,
+      receive_user_tel1: cur.receive_user_tel1.value,
+      receive_user_tel2: cur.receive_user_tel2.value,
+      receive_user_tel3: cur.receive_user_tel3.value,
+      receive_address1: cur.receive_address1.value,
+      receive_address2: cur.receive_address2.value,
+      receive_address3: cur.receive_address3.value,
+      cart_dv: cur.cart_dv.value,
+      card_user: cur.card_user.value,
+      card_number1: cur.card_number1.value,
+      card_number2: cur.card_number2.value,
+      card_number3: cur.card_number3.value,
+      card_number4: cur.card_number4.value,
+      card_month: cur.card_month.value,
+      card_year: cur.card_year.value,
+      user_id: props.userId,
+      total_price: totalPrice,
+    }
+    console.log(orderInfo)
+    orderCartItems(orderInfo)
+  }
+  //장바구니가 비었을 때, 상품 목록으로 이동
+  if (cartList.length === 0) {
+    alert("장바구니가 비었습니다.")
+    window.location.href = "/product"
+  }
   return (
     <Container>
-      <Row>
+      <Row style={{ textAlign: "center" }}>
+        <h1>구매하기</h1>
         <Table
           style={{
             textAlign: "center",
@@ -85,33 +115,40 @@ const Cart = (props) => {
           <span>원</span>
         </div>
       </Row>
-      <Row>
-        <Col>
-          <h4>배송지</h4>
-          <Form onSubmit={handleSubmit} style={{ margin: "5%" }}>
+      <Form onSubmit={handleSubmit} style={{ margin: "0 5%" }}>
+        <Row>
+          <Col style={{ margin: "0 5%" }}>
+            <h4>배송지</h4>
             <FormGroup className="row">
-              <Label>받는 사람</Label>
-              <Input className="col" />
+              <Label htmlFor="receive_user">받는 사람</Label>
+              <Input id="receive_user" className="col" />
             </FormGroup>
             <FormGroup className="row">
               <Label>전화번호</Label>
-              <Input className="col" /> - <Input className="col" /> -
-              <Input className="col" />
+              <Input id="receive_user_tel1" className="col" /> -{" "}
+              <Input id="receive_user_tel2" className="col" /> -
+              <Input id="receive_user_tel3" className="col" />
             </FormGroup>
             <FormGroup className="row">
               <Label>주소</Label>
-              <Input />
-              <Input placeholder="상세주소1" />
-              <Input placeholder="상세주소2" />
+              <Input id="receive_address1" />
+              <Input
+                id="receive_address2"
+                className="gy-2"
+                placeholder="상세주소1"
+              />
+              <Input
+                id="receive_address3"
+                className="gy-2"
+                placeholder="상세주소2"
+              />
             </FormGroup>
-          </Form>
-        </Col>
-        <Col>
-          <h4>결제정보</h4>
-          <Form onSubmit={handleSubmit} style={{ margin: "5%" }}>
+          </Col>
+          <Col style={{ margin: "0 5%" }}>
+            <h4>결제정보</h4>
             <FormGroup>
               <Label>카드선택</Label>
-              <Input name="select" type="select">
+              <Input id="cart_dv" name="select" type="select">
                 <option>비씨카드</option>
                 <option>신한카드</option>
                 <option>국민카드</option>
@@ -120,28 +157,35 @@ const Cart = (props) => {
               </Input>
             </FormGroup>
             <FormGroup>
-              <Label>성함</Label>
-              <Input />
+              <Label htmlFor="card_user">성함</Label>
+              <Input id="card_user" />
             </FormGroup>
             <FormGroup className="row">
               <Label>카드번호</Label>
-              <Input className="col" />
-              <Input className="col" />
-              <Input className="col" />
-              <Input className="col" />
+              <Input id="card_number1" className="col" />
+              <Input id="card_number2" className="col" />
+              <Input id="card_number3" className="col" />
+              <Input id="card_number4" className="col" />
             </FormGroup>
             <FormGroup className="row">
               <Label>유효기간</Label>
-              <Input className="col" /> /
-              <Input className="col" />
-              <p className="col"></p>
-              <p className="col"></p>
-              <p className="col"></p>
+              <Input id="card_month" className="col" /> /
+              <Input id="card_year" className="col" />
             </FormGroup>
-          </Form>
-        </Col>
-      </Row>
-      <Button>구매하기</Button>
+          </Col>
+        </Row>
+        <Row
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <Button style={{ margin: "3% 0", width: "30%" }} type="submit">
+            구매하기
+          </Button>
+        </Row>
+      </Form>
     </Container>
   )
 }
