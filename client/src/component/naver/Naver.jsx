@@ -17,7 +17,7 @@ const Naver = (props) => {
   const [keywordList, setKeywordList] = useState([])
   const [NproductList, setNProductList] = useState([])
   const [trigger, setTrigger] = useState(0)
-  //트리거를 쓰는 이유는 이벤트가 일어났을 때 useEffect를 작동하게 하려고 ex)온클릭했을때 함수이름을 써주면 그 함수를 호출할 수 있지만 useEffect는 이름이 없어서, 어떠한 값을 변경시켜주면서 작동시킬 수 있기 때문에 trigger라는 state를 만들어줌.
+  //트리거를 쓰는 이유는 이벤트가 일어났을 때 useEffect를 작동하게 하려고 ex)onClick했을때 함수이름을 써주면 그 함수를 호출할 수 있지만 useEffect는 이름이 없어서, 어떠한 값을 변경시켜주면서 작동시킬 수 있기 때문에 trigger라는 state를 만들어줌.
 
   useEffect(() => {
     if (keyword === "") return
@@ -56,8 +56,10 @@ const Naver = (props) => {
   return (
     <Container>
       <Row>
+        <h2>최저가 상품 조회 및 등록 하기</h2>
+      </Row>
+      <Row style={{ width: "60%", margin: "5% auto" }}>
         <Col>
-          <h2>최저가 상품 조회 및 등록 하기</h2>
           <InputGroup>
             <Input
               value={keyword}
