@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react"
+import React, { createElement, useEffect, useRef, useState } from "react"
 import { getCartInfo, orderCartItems } from "../../apiCalls"
 import {
   Button,
@@ -7,7 +7,6 @@ import {
   Form,
   FormGroup,
   Input,
-  InputGroup,
   Label,
   Row,
   Table,
@@ -20,6 +19,11 @@ const Cart = (props) => {
   useEffect(() => {
     ;(async () => {
       const { json, totalPrice } = await getCartInfo(props.userId)
+      //카트가 비었는지 체크
+      if (json.length === 0) {
+        alert("장바구니가 비었습니다.\n상품 목록으로 이동합니다.")
+        window.location.href = "/product"
+      }
       setCartList(json)
       setTotalPrice(totalPrice)
     })()
@@ -50,11 +54,7 @@ const Cart = (props) => {
     console.log(orderInfo)
     orderCartItems(orderInfo)
   }
-  //장바구니가 비었을 때, 상품 목록으로 이동
-  if (cartList.length === 0) {
-    alert("장바구니가 비었습니다.")
-    window.location.href = "/product"
-  }
+
   return (
     <Container>
       <Row style={{ textAlign: "center" }}>
